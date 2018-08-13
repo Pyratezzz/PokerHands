@@ -1,8 +1,4 @@
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PokerHand {
     public Card[] hand = new Card[5];
@@ -88,6 +84,40 @@ public class PokerHand {
         return false;
     }
 
+    public static HashMap<String, Integer> sortMapValue(HashMap<String, Integer> map){
+        List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
+        HashMap<String, Integer> sortedMap = new HashMap<>();
+
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+
+        for(Map.Entry<String, Integer> entry : list){
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
+    }
+
+    public static HashMap<String, Integer> sortMapKey(HashMap<String, Integer> map){
+        List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
+        HashMap<String, Integer> sortedMap = new HashMap<>();
+
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+        });
+
+        for(Map.Entry<String, Integer> entry : list){
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
+    }
+
     private void init() {
         System.out.println(hand[2].value);
         for(int i=0;i<5;i++){
@@ -97,6 +127,7 @@ public class PokerHand {
                 cardsMap.put(hand[i].value, 1);
         }
         sortHand();
+        cardsMap = sortMapValue(cardsMap);
     }
 
     public boolean isFlush(){
